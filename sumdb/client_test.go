@@ -26,19 +26,19 @@ func TestClientLookup(t *testing.T) {
 	tc.mustHaveLatest(1)
 
 	// Basic lookup.
-	tc.mustLookup("rsc.io/sampler", "v1.3.0", "rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=")
+	tc.mustLookup("rsc.io/sampler", "v1.3.0", "rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=\nrsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=")
 	tc.mustHaveLatest(3)
 
 	// Everything should now be cached, both for the original package and its /go.mod.
 	tc.getOK = false
-	tc.mustLookup("rsc.io/sampler", "v1.3.0", "rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=")
+	tc.mustLookup("rsc.io/sampler", "v1.3.0", "rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=\nrsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=")
 	tc.mustLookup("rsc.io/sampler", "v1.3.0/go.mod", "rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=")
 	tc.mustHaveLatest(3)
 	tc.getOK = true
 	tc.getTileOK = false // the cache has what we need
 
 	// Lookup with multiple returned lines.
-	tc.mustLookup("rsc.io/quote", "v1.5.2", "rsc.io/quote v1.5.2 h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=\nrsc.io/quote v1.5.2 h2:xyzzy")
+	tc.mustLookup("rsc.io/quote", "v1.5.2", "rsc.io/quote v1.5.2 h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=\nrsc.io/quote v1.5.2/go.mod h1:LzX7hefJvL54yjefDEDHNONDjII0t9xZLPXsUe+TKr0=\nrsc.io/quote v1.5.2 h2:xyzzy")
 	tc.mustHaveLatest(3)
 
 	// Lookup with need for !-encoding.
@@ -69,7 +69,7 @@ func TestClientBadTiles(t *testing.T) {
 	tc.mustError(err, "rsc.io/sampler@v1.3.0: initializing sumdb.Client: checking tree#1: downloaded inconsistent tile")
 	flipBits()
 	tc.newClient()
-	tc.mustLookup("rsc.io/sampler", "v1.3.0", "rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=")
+	tc.mustLookup("rsc.io/sampler", "v1.3.0", "rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=\nrsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=")
 
 	// Bad tiles after initial download.
 	flipBits()
